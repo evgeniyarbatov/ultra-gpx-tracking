@@ -1,8 +1,6 @@
 # GPX Route Tracking for Ultras
 
-Track progress along a GPX route during an ultra run.
-
-Runs in the browser and for current location displays:
+Track progress along a GPX route during an ultra run. This runs in the browser and for current location displays:
 
 - Street address of the current location
 - Distance completed and remaining
@@ -16,15 +14,7 @@ Runs in the browser and for current location displays:
 - Deploy code to AWS with Terraform
 - Load public URL in the browser on the phone
 
-## Requirements
-
-Install gRPC tools for NodeJS
-
-```
-npm install -g grpc-tools
-```
-
-## Run locally
+## Run
 
 ```
 docker compose up
