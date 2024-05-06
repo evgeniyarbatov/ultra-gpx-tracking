@@ -1,0 +1,15 @@
+#! /bin/bash
+
+hostnamectl set-hostname server
+
+curl -sSL https://get.docker.com/ | sh
+
+cat > /home/ubuntu/docker-compose.yaml <<EOF
+${compose}
+EOF
+
+docker compose \
+-f /home/ubuntu/docker-compose.yaml \
+up -d
+
+usermod -aG docker ubuntu

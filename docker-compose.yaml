@@ -1,0 +1,21 @@
+services:
+  frontend:
+    image: evgenyarbatov/gpx-frontend
+    container_name: "gpx-frontend"
+    ports:
+      - 8080:8080
+    networks:
+      - default
+    restart: unless-stopped
+  backend:
+    image: evgenyarbatov/gpx-backend
+    container_name: "gpx-backend"
+    ports:
+      - 9090:9090
+    networks:
+      - default
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge
