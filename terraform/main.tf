@@ -106,3 +106,7 @@ output "ssh" {
 output "logs" {
   value = "ssh -i ~/.ssh/terraform.pem -o 'StrictHostKeyChecking no' ubuntu@${aws_instance.server.public_ip} 'tail -f /var/log/cloud-init-output.log'"
 }
+
+output "url" {
+  value = "http://${aws_instance.server.public_ip}:8080"
+}

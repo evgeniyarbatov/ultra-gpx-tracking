@@ -1,12 +1,15 @@
-FROM --platform=linux/amd64 python:3.9-slim
+FROM --platform=linux/amd64 ubuntu:latest
 
-WORKDIR /app
+RUN apt-get update
+RUN apt-get install python3 python3-pip -y
 
-COPY ./src/* /app/
-COPY requirements.txt /app/requirements.txt
+WORKDIR /usr/src/app
 
-RUN pip install -r requirements.txt
+COPY requirements.txt ./
+RUN pip3 install --break-system-packages --no-cache-dir -r requirements.txt
+
+COPY . .
 
 EXPOSE 9090
 
-CMD ["python", "server.py"]
+CMD ["python3", "src/server.py"]

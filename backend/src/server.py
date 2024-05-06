@@ -1,5 +1,4 @@
 import grpc
-import logging
 import gpxtracker_pb2
 import gpxtracker_pb2_grpc
 
@@ -32,5 +31,4 @@ def serve():
     server.wait_for_termination()
 
 if __name__ == "__main__":
-    logging.basicConfig()
     serve()
