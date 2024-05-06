@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package main;
+
+message LocationRequest {
+  float lat = 1;
+  float lng = 2;
+}
+
+message AddressResponse {
+  string address = 1;
+}
+
+message DistanceResponse {
+  float distance = 1;
+}
+
+message TimeResponse {
+  string timestamp = 1;
+}
+
+message GPXFile {
+  string xml = 1;
+}
+
+service GPXTracker {
+  rpc GetAddress (LocationRequest) returns (AddressResponse) {}
+  rpc GetRemainginDistance (LocationRequest) returns (DistanceResponse) {}
+  rpc GetCoveredDistance (LocationRequest) returns (DistanceResponse) {}
+  rpc GetTimeEstimate (LocationRequest) returns (TimeResponse) {}
+  rpc GetGPXFile (LocationRequest) returns (GPXFile) {}
+}

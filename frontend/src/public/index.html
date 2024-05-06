@@ -44,7 +44,7 @@
       function showStatus(position) {
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
-        var url = "/location?lat=" + latitude + "&lon=" + longitude;
+        var url = "/location?lat=" + latitude + "&lng=" + longitude;
 
         fetch(url)
           .then(response => response.json())
