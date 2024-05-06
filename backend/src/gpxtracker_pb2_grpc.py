@@ -40,27 +40,27 @@ class GPXTrackerStub(object):
             channel: A grpc.Channel.
         """
         self.GetAddress = channel.unary_unary(
-                '/GPXTracker/GetAddress',
+                '/main.GPXTracker/GetAddress',
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
                 response_deserializer=gpxtracker__pb2.AddressResponse.FromString,
                 _registered_method=True)
         self.GetRemainginDistance = channel.unary_unary(
-                '/GPXTracker/GetRemainginDistance',
+                '/main.GPXTracker/GetRemainginDistance',
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
                 response_deserializer=gpxtracker__pb2.DistanceResponse.FromString,
                 _registered_method=True)
         self.GetCoveredDistance = channel.unary_unary(
-                '/GPXTracker/GetCoveredDistance',
+                '/main.GPXTracker/GetCoveredDistance',
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
                 response_deserializer=gpxtracker__pb2.DistanceResponse.FromString,
                 _registered_method=True)
         self.GetTimeEstimate = channel.unary_unary(
-                '/GPXTracker/GetTimeEstimate',
+                '/main.GPXTracker/GetTimeEstimate',
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
                 response_deserializer=gpxtracker__pb2.TimeResponse.FromString,
                 _registered_method=True)
         self.GetGPXFile = channel.unary_unary(
-                '/GPXTracker/GetGPXFile',
+                '/main.GPXTracker/GetGPXFile',
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
                 response_deserializer=gpxtracker__pb2.GPXFile.FromString,
                 _registered_method=True)
@@ -129,7 +129,7 @@ def add_GPXTrackerServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'GPXTracker', rpc_method_handlers)
+            'main.GPXTracker', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -151,7 +151,7 @@ class GPXTracker(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/GPXTracker/GetAddress',
+            '/main.GPXTracker/GetAddress',
             gpxtracker__pb2.LocationRequest.SerializeToString,
             gpxtracker__pb2.AddressResponse.FromString,
             options,
@@ -178,7 +178,7 @@ class GPXTracker(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/GPXTracker/GetRemainginDistance',
+            '/main.GPXTracker/GetRemainginDistance',
             gpxtracker__pb2.LocationRequest.SerializeToString,
             gpxtracker__pb2.DistanceResponse.FromString,
             options,
@@ -205,7 +205,7 @@ class GPXTracker(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/GPXTracker/GetCoveredDistance',
+            '/main.GPXTracker/GetCoveredDistance',
             gpxtracker__pb2.LocationRequest.SerializeToString,
             gpxtracker__pb2.DistanceResponse.FromString,
             options,
@@ -232,7 +232,7 @@ class GPXTracker(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/GPXTracker/GetTimeEstimate',
+            '/main.GPXTracker/GetTimeEstimate',
             gpxtracker__pb2.LocationRequest.SerializeToString,
             gpxtracker__pb2.TimeResponse.FromString,
             options,
@@ -259,7 +259,7 @@ class GPXTracker(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/GPXTracker/GetGPXFile',
+            '/main.GPXTracker/GetGPXFile',
             gpxtracker__pb2.LocationRequest.SerializeToString,
             gpxtracker__pb2.GPXFile.FromString,
             options,

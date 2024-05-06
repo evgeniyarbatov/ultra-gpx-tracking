@@ -8,10 +8,7 @@ gencode:
 		gpxtracker/gpxtracker.proto \
 	)
 
-	npx grpc_tools_node_protoc \
-	-I gpxtracker \
-	--js_out=import_style=commonjs,binary:frontend/src \
-	--grpc_out=frontend/src \
-	--plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` \
-	gpxtracker/gpxtracker.proto
+	cp \
+	gpxtracker/gpxtracker.proto \
+	frontend/src/gpxtracker
 

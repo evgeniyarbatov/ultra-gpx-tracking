@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+package main;
+
 message LocationRequest {
   float lat = 1;
   float lng = 2;

@@ -14,23 +14,23 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10gpxtracker.proto\"+\n\x0fLocationRequest\x12\x0b\n\x03lat\x18\x01 \x01(\x02\x12\x0b\n\x03lng\x18\x02 \x01(\x02\"\"\n\x0f\x41\x64\x64ressResponse\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"$\n\x10\x44istanceResponse\x12\x10\n\x08\x64istance\x18\x01 \x01(\x02\"!\n\x0cTimeResponse\x12\x11\n\ttimestamp\x18\x01 \x01(\t\"\x16\n\x07GPXFile\x12\x0b\n\x03xml\x18\x01 \x01(\t2\x9e\x02\n\nGPXTracker\x12\x32\n\nGetAddress\x12\x10.LocationRequest\x1a\x10.AddressResponse\"\x00\x12=\n\x14GetRemainginDistance\x12\x10.LocationRequest\x1a\x11.DistanceResponse\"\x00\x12;\n\x12GetCoveredDistance\x12\x10.LocationRequest\x1a\x11.DistanceResponse\"\x00\x12\x34\n\x0fGetTimeEstimate\x12\x10.LocationRequest\x1a\r.TimeResponse\"\x00\x12*\n\nGetGPXFile\x12\x10.LocationRequest\x1a\x08.GPXFile\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10gpxtracker.proto\x12\x04main\"+\n\x0fLocationRequest\x12\x0b\n\x03lat\x18\x01 \x01(\x02\x12\x0b\n\x03lng\x18\x02 \x01(\x02\"\"\n\x0f\x41\x64\x64ressResponse\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\"$\n\x10\x44istanceResponse\x12\x10\n\x08\x64istance\x18\x01 \x01(\x02\"!\n\x0cTimeResponse\x12\x11\n\ttimestamp\x18\x01 \x01(\t\"\x16\n\x07GPXFile\x12\x0b\n\x03xml\x18\x01 \x01(\t2\xd0\x02\n\nGPXTracker\x12<\n\nGetAddress\x12\x15.main.LocationRequest\x1a\x15.main.AddressResponse\"\x00\x12G\n\x14GetRemainginDistance\x12\x15.main.LocationRequest\x1a\x16.main.DistanceResponse\"\x00\x12\x45\n\x12GetCoveredDistance\x12\x15.main.LocationRequest\x1a\x16.main.DistanceResponse\"\x00\x12>\n\x0fGetTimeEstimate\x12\x15.main.LocationRequest\x1a\x12.main.TimeResponse\"\x00\x12\x34\n\nGetGPXFile\x12\x15.main.LocationRequest\x1a\r.main.GPXFile\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'gpxtracker_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
-  _globals['_LOCATIONREQUEST']._serialized_start=20
-  _globals['_LOCATIONREQUEST']._serialized_end=63
-  _globals['_ADDRESSRESPONSE']._serialized_start=65
-  _globals['_ADDRESSRESPONSE']._serialized_end=99
-  _globals['_DISTANCERESPONSE']._serialized_start=101
-  _globals['_DISTANCERESPONSE']._serialized_end=137
-  _globals['_TIMERESPONSE']._serialized_start=139
-  _globals['_TIMERESPONSE']._serialized_end=172
-  _globals['_GPXFILE']._serialized_start=174
-  _globals['_GPXFILE']._serialized_end=196
-  _globals['_GPXTRACKER']._serialized_start=199
-  _globals['_GPXTRACKER']._serialized_end=485
+  _globals['_LOCATIONREQUEST']._serialized_start=26
+  _globals['_LOCATIONREQUEST']._serialized_end=69
+  _globals['_ADDRESSRESPONSE']._serialized_start=71
+  _globals['_ADDRESSRESPONSE']._serialized_end=105
+  _globals['_DISTANCERESPONSE']._serialized_start=107
+  _globals['_DISTANCERESPONSE']._serialized_end=143
+  _globals['_TIMERESPONSE']._serialized_start=145
+  _globals['_TIMERESPONSE']._serialized_end=178
+  _globals['_GPXFILE']._serialized_start=180
+  _globals['_GPXFILE']._serialized_end=202
+  _globals['_GPXTRACKER']._serialized_start=205
+  _globals['_GPXTRACKER']._serialized_end=541
 # @@protoc_insertion_point(module_scope)

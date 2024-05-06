@@ -1,33 +1,49 @@
 import grpc
 import gpxtracker_pb2
 import gpxtracker_pb2_grpc
+import logging
+import sys
 
 from concurrent import futures
 
 PORT = 9090
 
+log = logging.getLogger("grpc-server")
+
+logging.basicConfig(
+    format='%(asctime)s %(message)s',
+    level=logging.DEBUG, 
+    stream=sys.stdout,
+    datefmt='%Y-%m-%d %H:%M:%S',
+)
+
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetAddress(self, request, context):
-        return gpxtracker_pb2.Response(address=f"Current address")
+        log.info(f"GetAddress lat={request.lat} lng={request.lng}")
+        return gpxtracker_pb2.AddressResponse(address=f"Current address")
 
     def GetRemainginDistance(self, request, context):
-        return gpxtracker_pb2.Response(distance=322.0)
+        log.info(f"GetRemainginDistance lat={request.lat} lng={request.lng}")
+        return gpxtracker_pb2.DistanceResponse(distance=322.0)
 
     def GetCoveredDistance(self, request, context):
-        return gpxtracker_pb2.Response(distance=0.0)
+        log.info(f"GetCoveredDistance lat={request.lat} lng={request.lng}")
+        return gpxtracker_pb2.DistanceResponse(distance=0.0)
 
     def GetTimeEstimate(self, request, context):
-        return gpxtracker_pb2.Response(timestamp="2022-05-21 23:00:00")
+        log.info(f"GetTimeEstimate lat={request.lat} lng={request.lng}")
+        return gpxtracker_pb2.TimeResponse(timestamp="2022-05-21 23:00:00")
 
     def GetGPXFile(self, request, context):
-        return gpxtracker_pb2.Response(xml="XML file contents")
+        log.info(f"GetGPXFile lat={request.lat} lng={request.lng}")
+        return gpxtracker_pb2.GPXFile(xml="XML file contents")
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     gpxtracker_pb2_grpc.add_GPXTrackerServicer_to_server(GPXTracker(), server)
     server.add_insecure_port("[::]:" + str(PORT))
     server.start()
-    print("Server started, listening on " + str(PORT))
+    log.info("Listening on " + str(PORT))
     server.wait_for_termination()
 
 if __name__ == "__main__":
