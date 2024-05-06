@@ -19,23 +19,23 @@ logging.basicConfig(
 
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetAddress(self, request, context):
-        log.info(f"GetAddress lat={request.lat} lng={request.lng}")
+        log.info(f"GetAddress")
         return gpxtracker_pb2.AddressResponse(address=f"Current address")
 
     def GetRemainginDistance(self, request, context):
-        log.info(f"GetRemainginDistance lat={request.lat} lng={request.lng}")
+        log.info(f"GetRemainginDistance")
         return gpxtracker_pb2.DistanceResponse(distance=322.0)
 
     def GetCoveredDistance(self, request, context):
-        log.info(f"GetCoveredDistance lat={request.lat} lng={request.lng}")
+        log.info(f"GetCoveredDistance")
         return gpxtracker_pb2.DistanceResponse(distance=0.0)
 
     def GetTimeEstimate(self, request, context):
-        log.info(f"GetTimeEstimate lat={request.lat} lng={request.lng}")
+        log.info(f"GetTimeEstimate")
         return gpxtracker_pb2.TimeResponse(timestamp="2022-05-21 23:00:00")
 
     def GetGPXFile(self, request, context):
-        log.info(f"GetGPXFile lat={request.lat} lng={request.lng}")
+        log.info(f"GetGPXFile")
         return gpxtracker_pb2.GPXFile(xml="XML file contents")
 
 def serve():
