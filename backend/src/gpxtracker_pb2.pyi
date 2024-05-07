@@ -12,20 +12,12 @@ class LocationRequest(_message.Message):
     lng: float
     def __init__(self, lat: _Optional[float] = ..., lng: _Optional[float] = ...) -> None: ...
 
-class AddressResponse(_message.Message):
-    __slots__ = ("address",)
+class LocationResponse(_message.Message):
+    __slots__ = ("address", "distance", "cutoff_time")
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
-    address: str
-    def __init__(self, address: _Optional[str] = ...) -> None: ...
-
-class DistanceResponse(_message.Message):
-    __slots__ = ("distance",)
     DISTANCE_FIELD_NUMBER: _ClassVar[int]
+    CUTOFF_TIME_FIELD_NUMBER: _ClassVar[int]
+    address: str
     distance: float
-    def __init__(self, distance: _Optional[float] = ...) -> None: ...
-
-class TimeEstimateResponse(_message.Message):
-    __slots__ = ("time_estimate",)
-    TIME_ESTIMATE_FIELD_NUMBER: _ClassVar[int]
-    time_estimate: str
-    def __init__(self, time_estimate: _Optional[str] = ...) -> None: ...
+    cutoff_time: str
+    def __init__(self, address: _Optional[str] = ..., distance: _Optional[float] = ..., cutoff_time: _Optional[str] = ...) -> None: ...

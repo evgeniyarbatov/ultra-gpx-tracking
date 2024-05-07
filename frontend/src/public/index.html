@@ -26,7 +26,7 @@
         <button 
           class="btn btn-primary full-width-button" 
           onclick="getStatus()">
-            Get Status
+            Where am I?
         </button>
       </div>
     </div>
@@ -54,23 +54,19 @@
             container.innerHTML = '';
 
             const locationElement = document.createElement('p');
-            locationElement.textContent = `Lat: ${data.lat} Long: ${data.lng}`;
+            locationElement.textContent = `Location: ${data.address} @ ${data.distance}km`;
             container.appendChild(locationElement);
 
-            data.data.forEach(item => {
-              const itemElement = document.createElement('p');
-              if (item.address) {
-                itemElement.textContent = `Address: ${item.address}`;
-              } else if (item.distance) {
-                itemElement.textContent = `Distance: ${item.distance}`;
-              } else if (item.time_estimate) {
-                itemElement.textContent = `Time Estimate: ${item.time_estimate}`;
-              }
-              container.appendChild(itemElement);
-            });
+            const cutoffTimeElement = document.createElement('p');
+            cutoffTimeElement.textContent = `Cutoff time: ${data.cutoff_time}`;
+            container.appendChild(cutoffTimeElement);
+
+            const coordinatesElement = document.createElement('p');
+            coordinatesElement.textContent = `Lat: ${data.lat} Long: ${data.lng}`;
+            container.appendChild(coordinatesElement);
           })
           .catch(error => {
-            alert('Error from server')
+            alert('Error fetching from server', JSON.stringify(error));
           });
       }
   </script>

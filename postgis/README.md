@@ -13,7 +13,7 @@ psql -h localhost -U root -d gpx
 Find the point closest to the given location (this gives distance):
 
 ```
-SELECT id, location, distance, estimated_time
+SELECT id, location, distance, cutoff_time, street
 FROM gpx_route
 ORDER BY location <-> ST_SetSRID(ST_MakePoint(103.89372498976476, 1.3095501745003915), 4326)
 LIMIT 1;

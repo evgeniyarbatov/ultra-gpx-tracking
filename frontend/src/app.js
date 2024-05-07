@@ -57,47 +57,28 @@ app.get('/location', async (req, res) => {
     lng: lng,
   };
 
-  const requests = [
-    new Promise((resolve, reject) => {
-      gRPCClient.getAddress(request, (err, response) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(response);
-        }
-      });
-    }),
-    new Promise((resolve, reject) => {
-      gRPCClient.getDistance(request, (err, response) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(response);
-        }
-      });
-    }),
-    new Promise((resolve, reject) => {
-      gRPCClient.getTimeEstimate(request, (err, response) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(response);
-        }
-      });
-    }),
-  ];
-
-  Promise.all(requests)
-    .then(responses => {
-      res.json({ 
-        lat: lat, 
-        lng: lng, 
-        data: responses,
-      });
-    })
-    .catch(error => {
-      res.json({ error: error });
+  new Promise((resolve, reject) => {
+    gRPCClient.getLocationInfo(request, (err, response) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(response);
+      }
     });
+  }).then(response => {
+    const result = Object.assign(
+      {}, 
+      { 
+        lat: lat, 
+        lng: lng,
+      },
+      response,
+    );
+    res.json(result);
+  })
+  .catch(error => {
+    res.json({ error: error });
+  });
 });
 
 app.listen(port, () => {

@@ -7,20 +7,12 @@ message LocationRequest {
   float lng = 2;
 }
 
-message AddressResponse {
+message LocationResponse {
   string address = 1;
-}
-
-message DistanceResponse {
-  float distance = 1;
-}
-
-message TimeEstimateResponse {
-  string time_estimate = 1;
+  float distance = 2;
+  string cutoff_time = 3;
 }
 
 service GPXTracker {
-  rpc GetAddress (LocationRequest) returns (AddressResponse) {}
-  rpc GetDistance (LocationRequest) returns (DistanceResponse) {}
-  rpc GetTimeEstimate (LocationRequest) returns (TimeEstimateResponse) {}
+  rpc GetLocationInfo (LocationRequest) returns (LocationResponse) {}
 }

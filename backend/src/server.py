@@ -27,40 +27,34 @@ conn = psycopg2.connect(
     port=os.getenv("DB_PORT", "5432")
 )
 
-def get_location_info(lat, lng, field):
+def get_location_info(lat, lng):
     cur = conn.cursor()
     cur.execute(f"""
-        SELECT {field}
+        SELECT 
+            street, 
+            ROUND(distance), 
+            cutoff_time
         FROM gpx_route
         ORDER BY location <-> ST_SetSRID(ST_MakePoint({lng}, {lat}), 4326)
         LIMIT 1;
     """)
     row = cur.fetchone()
     cur.close()
-    return row[0]
+    return row
 
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
-    def GetAddress(self, request, context):
-        log.info(f"GetAddress")
-        return gpxtracker_pb2.AddressResponse(address=f"Current address")
-
-    def GetDistance(self, request, context):
-        log.info(f"GetCoveredDistance")
-        distance = get_location_info(
+    def GetLocationInfo(self, request, context):
+        log.info(f"GetLocationInfo")
+        info = get_location_info(
             request.lat,
             request.lng,
-            'distance',
         )
-        return gpxtracker_pb2.DistanceResponse(distance=distance)
-
-    def GetTimeEstimate(self, request, context):
-        log.info(f"GetTimeEstimate")
-        time_estimate = get_location_info(
-            request.lat,
-            request.lng,
-            'estimated_time',
+        log.info(info)
+        return gpxtracker_pb2.LocationResponse(
+            address=info[0],
+            distance=info[1],
+            cutoff_time=info[2],
         )
-        return gpxtracker_pb2.TimeEstimateResponse(time_estimate=time_estimate)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
