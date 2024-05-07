@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Location Info</title>
+  <title>SG200</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -12,10 +12,22 @@
       padding: 0;
     }
     .button-container {
-      padding: 15px;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 10px;
     }
     .full-width-button {
       width: 90%;
+    }
+    .whatsapp-btn {
+        padding: 10px 20px;
+        background-color: #25d366;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+    .location-info {
+      padding-top: 15px;
     }
   </style>
 </head>
@@ -25,50 +37,74 @@
       <div class="col button-container">
         <button 
           class="btn btn-primary full-width-button" 
-          onclick="getStatus()">
+          onclick="getLocationInfo()">
             Where am I?
         </button>
       </div>
     </div>
-    <div id="container"></div>
+    <div class="row">
+      <div class="col button-container">
+        <button 
+          class="btn whatsapp-btn full-width-button" 
+          onclick="shareToWhatsApp()">
+            WhatsApp
+        </button>
+      </div>
+    </div>
+    <div id="container" class="location-info"></div>
   </div>
 
   <script>
-      function getStatus() {
-          if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(showStatus);
-          } else {
-            alert("Geolocation is not supported.");
-          }
-      }
+    function getLocationInfo() {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          var url = "/location?lat=" + latitude + "&lng=" + longitude;
 
-      function showStatus(position) {
-        var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
-        var url = "/location?lat=" + latitude + "&lng=" + longitude;
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              const container = document.getElementById('container');
+              container.innerHTML = '';
 
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {
-            const container = document.getElementById('container');
-            container.innerHTML = '';
+              const locationElement = document.createElement('p');
+              locationElement.textContent = `Location: ${data.address} @ ${data.distance}km`;
+              container.appendChild(locationElement);
 
-            const locationElement = document.createElement('p');
-            locationElement.textContent = `Location: ${data.address} @ ${data.distance}km`;
-            container.appendChild(locationElement);
+              const cutoffTimeElement = document.createElement('p');
+              cutoffTimeElement.textContent = `Cutoff time: ${data.cutoff_time}`;
+              container.appendChild(cutoffTimeElement);
 
-            const cutoffTimeElement = document.createElement('p');
-            cutoffTimeElement.textContent = `Cutoff time: ${data.cutoff_time}`;
-            container.appendChild(cutoffTimeElement);
+              const coordinatesElement = document.createElement('p');
+              coordinatesElement.textContent = `Lat: ${data.lat} Long: ${data.lng}`;
+              container.appendChild(coordinatesElement);
+            })
+            .catch(error => {
+              alert('Error fetching from server', JSON.stringify(error));
+            });
+        }
+      );
+    }
 
-            const coordinatesElement = document.createElement('p');
-            coordinatesElement.textContent = `Lat: ${data.lat} Long: ${data.lng}`;
-            container.appendChild(coordinatesElement);
-          })
-          .catch(error => {
-            alert('Error fetching from server', JSON.stringify(error));
-          });
-      }
+    function shareToWhatsApp() {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          var latitude = position.coords.latitude;
+          var longitude = position.coords.longitude;
+          var url = "/location?lat=" + latitude + "&lng=" + longitude;
+
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              const message = `${data.address} @ ${data.distance}km`;
+              var phoneNumber = "+6596332436";
+              var whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+              window.open(whatsappUrl, '_blank');
+            });
+        }
+      );
+    }
   </script>
 </body>
 </html>
