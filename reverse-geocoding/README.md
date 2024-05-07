@@ -22,5 +22,5 @@ mediagis/nominatim:4.4
 
 Open URL:
 
-http://localhost:8080/reverse?format=jsonv2&lat=1.3119099340519775&lon=103.8887017595569
+http://localhost:8080/reverse?format=json&lat=1.3119099340519775&lon=103.8887017595569
 
