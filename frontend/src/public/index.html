@@ -55,6 +55,11 @@
   </div>
 
   <script>
+    function openGoogleMaps(lat, long) {
+      var url = `https://www.google.com/maps?q=${lat},${long}`;
+      window.open(url, '_blank');
+    }
+
     function getLocationInfo() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -79,6 +84,15 @@
               const coordinatesElement = document.createElement('p');
               coordinatesElement.textContent = `Lat: ${data.lat} Long: ${data.lng}`;
               container.appendChild(coordinatesElement);
+
+              const mapLinkElement = document.createElement("a");
+              mapLinkElement.href = "#";
+              mapLinkElement.textContent = "Google Maps";
+              mapLinkElement.addEventListener("click", function(event) {
+                  event.preventDefault();
+                  openGoogleMaps(latitude, longitude);
+              });
+              container.appendChild(mapLinkElement);
             })
             .catch(error => {
               alert('Error fetching from server', JSON.stringify(error));
