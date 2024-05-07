@@ -3,7 +3,7 @@ services:
     image: evgenyarbatov/gpx-postgis:latest
     container_name: "gpx-postgis"
     healthcheck:
-      test: ["CMD", "pg_isready", "-D", "gpx"]
+      test: ["CMD", "pg_isready", "-d", "gpx"]
       interval: 10s
       timeout: 5s
       retries: 5
