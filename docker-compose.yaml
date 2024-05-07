@@ -13,6 +13,9 @@ services:
   backend:
     image: evgenyarbatov/gpx-backend:latest
     container_name: "gpx-backend"
+    environment:
+      - SERVER_PORT=9090
+      - DB_HOST=postgis
     ports:
       - 9090:9090
     networks:

@@ -30,6 +30,7 @@
         </button>
       </div>
     </div>
+    <div id="container"></div>
   </div>
 
   <script>
@@ -49,7 +50,24 @@
         fetch(url)
           .then(response => response.json())
           .then(data => {
-            alert(JSON.stringify(data));
+            const container = document.getElementById('container');
+            container.innerHTML = '';
+
+            const locationElement = document.createElement('p');
+            locationElement.textContent = `Lat: ${data.lat} Long: ${data.lng}`;
+            container.appendChild(locationElement);
+
+            data.data.forEach(item => {
+              const itemElement = document.createElement('p');
+              if (item.address) {
+                itemElement.textContent = `Address: ${item.address}`;
+              } else if (item.distance) {
+                itemElement.textContent = `Distance: ${item.distance}`;
+              } else if (item.time_estimate) {
+                itemElement.textContent = `Time Estimate: ${item.time_estimate}`;
+              }
+              container.appendChild(itemElement);
+            });
           })
           .catch(error => {
             alert('Error from server')

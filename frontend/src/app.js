@@ -68,7 +68,16 @@ app.get('/location', async (req, res) => {
       });
     }),
     new Promise((resolve, reject) => {
-      gRPCClient.getRemainginDistance(request, (err, response) => {
+      gRPCClient.getDistance(request, (err, response) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(response);
+        }
+      });
+    }),
+    new Promise((resolve, reject) => {
+      gRPCClient.getTimeEstimate(request, (err, response) => {
         if (err) {
           reject(err);
         } else {
@@ -80,7 +89,11 @@ app.get('/location', async (req, res) => {
 
   Promise.all(requests)
     .then(responses => {
-      res.json({ lat: lat, lng: lng, data: responses });
+      res.json({ 
+        lat: lat, 
+        lng: lng, 
+        data: responses,
+      });
     })
     .catch(error => {
       res.json({ error: error });

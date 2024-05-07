@@ -44,25 +44,15 @@ class GPXTrackerStub(object):
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
                 response_deserializer=gpxtracker__pb2.AddressResponse.FromString,
                 _registered_method=True)
-        self.GetRemainginDistance = channel.unary_unary(
-                '/main.GPXTracker/GetRemainginDistance',
-                request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
-                response_deserializer=gpxtracker__pb2.DistanceResponse.FromString,
-                _registered_method=True)
-        self.GetCoveredDistance = channel.unary_unary(
-                '/main.GPXTracker/GetCoveredDistance',
+        self.GetDistance = channel.unary_unary(
+                '/main.GPXTracker/GetDistance',
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
                 response_deserializer=gpxtracker__pb2.DistanceResponse.FromString,
                 _registered_method=True)
         self.GetTimeEstimate = channel.unary_unary(
                 '/main.GPXTracker/GetTimeEstimate',
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
-                response_deserializer=gpxtracker__pb2.TimeResponse.FromString,
-                _registered_method=True)
-        self.GetGPXFile = channel.unary_unary(
-                '/main.GPXTracker/GetGPXFile',
-                request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
-                response_deserializer=gpxtracker__pb2.GPXFile.FromString,
+                response_deserializer=gpxtracker__pb2.TimeEstimateResponse.FromString,
                 _registered_method=True)
 
 
@@ -75,25 +65,13 @@ class GPXTrackerServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetRemainginDistance(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetCoveredDistance(self, request, context):
+    def GetDistance(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetTimeEstimate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def GetGPXFile(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -107,25 +85,15 @@ def add_GPXTrackerServicer_to_server(servicer, server):
                     request_deserializer=gpxtracker__pb2.LocationRequest.FromString,
                     response_serializer=gpxtracker__pb2.AddressResponse.SerializeToString,
             ),
-            'GetRemainginDistance': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetRemainginDistance,
-                    request_deserializer=gpxtracker__pb2.LocationRequest.FromString,
-                    response_serializer=gpxtracker__pb2.DistanceResponse.SerializeToString,
-            ),
-            'GetCoveredDistance': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetCoveredDistance,
+            'GetDistance': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetDistance,
                     request_deserializer=gpxtracker__pb2.LocationRequest.FromString,
                     response_serializer=gpxtracker__pb2.DistanceResponse.SerializeToString,
             ),
             'GetTimeEstimate': grpc.unary_unary_rpc_method_handler(
                     servicer.GetTimeEstimate,
                     request_deserializer=gpxtracker__pb2.LocationRequest.FromString,
-                    response_serializer=gpxtracker__pb2.TimeResponse.SerializeToString,
-            ),
-            'GetGPXFile': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetGPXFile,
-                    request_deserializer=gpxtracker__pb2.LocationRequest.FromString,
-                    response_serializer=gpxtracker__pb2.GPXFile.SerializeToString,
+                    response_serializer=gpxtracker__pb2.TimeEstimateResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -165,7 +133,7 @@ class GPXTracker(object):
             _registered_method=True)
 
     @staticmethod
-    def GetRemainginDistance(request,
+    def GetDistance(request,
             target,
             options=(),
             channel_credentials=None,
@@ -178,34 +146,7 @@ class GPXTracker(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/main.GPXTracker/GetRemainginDistance',
-            gpxtracker__pb2.LocationRequest.SerializeToString,
-            gpxtracker__pb2.DistanceResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GetCoveredDistance(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/main.GPXTracker/GetCoveredDistance',
+            '/main.GPXTracker/GetDistance',
             gpxtracker__pb2.LocationRequest.SerializeToString,
             gpxtracker__pb2.DistanceResponse.FromString,
             options,
@@ -234,34 +175,7 @@ class GPXTracker(object):
             target,
             '/main.GPXTracker/GetTimeEstimate',
             gpxtracker__pb2.LocationRequest.SerializeToString,
-            gpxtracker__pb2.TimeResponse.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
-
-    @staticmethod
-    def GetGPXFile(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/main.GPXTracker/GetGPXFile',
-            gpxtracker__pb2.LocationRequest.SerializeToString,
-            gpxtracker__pb2.GPXFile.FromString,
+            gpxtracker__pb2.TimeEstimateResponse.FromString,
             options,
             channel_credentials,
             insecure,

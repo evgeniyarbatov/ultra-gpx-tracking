@@ -1,12 +1,15 @@
 import grpc
-import gpxtracker_pb2
-import gpxtracker_pb2_grpc
+import psycopg2
 import logging
 import sys
+import os
 
 from concurrent import futures
 
-PORT = 9090
+import gpxtracker_pb2
+import gpxtracker_pb2_grpc
+
+PORT = os.getenv("SERVER_PORT", 9090)
 
 log = logging.getLogger("grpc-server")
 logging.basicConfig(
@@ -16,26 +19,48 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S',
 )
 
+conn = psycopg2.connect(
+    dbname=os.getenv("DB_NAME", "gpx"),
+    user=os.getenv("DB_USER", "root"),
+    password=os.getenv("DB_PASSWORD", "root"),
+    host=os.getenv("DB_HOST", "localhost"),
+    port=os.getenv("DB_PORT", "5432")
+)
+
+def get_location_info(lat, lng, field):
+    cur = conn.cursor()
+    cur.execute(f"""
+        SELECT {field}
+        FROM gpx_route
+        ORDER BY location <-> ST_SetSRID(ST_MakePoint({lng}, {lat}), 4326)
+        LIMIT 1;
+    """)
+    row = cur.fetchone()
+    cur.close()
+    return row[0]
+
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetAddress(self, request, context):
         log.info(f"GetAddress")
         return gpxtracker_pb2.AddressResponse(address=f"Current address")
 
-    def GetRemainginDistance(self, request, context):
-        log.info(f"GetRemainginDistance")
-        return gpxtracker_pb2.DistanceResponse(distance=322.0)
-
-    def GetCoveredDistance(self, request, context):
+    def GetDistance(self, request, context):
         log.info(f"GetCoveredDistance")
-        return gpxtracker_pb2.DistanceResponse(distance=0.0)
+        distance = get_location_info(
+            request.lat,
+            request.lng,
+            'distance',
+        )
+        return gpxtracker_pb2.DistanceResponse(distance=distance)
 
     def GetTimeEstimate(self, request, context):
         log.info(f"GetTimeEstimate")
-        return gpxtracker_pb2.TimeResponse(timestamp="2022-05-21 23:00:00")
-
-    def GetGPXFile(self, request, context):
-        log.info(f"GetGPXFile")
-        return gpxtracker_pb2.GPXFile(xml="XML file contents")
+        time_estimate = get_location_info(
+            request.lat,
+            request.lng,
+            'estimated_time',
+        )
+        return gpxtracker_pb2.TimeEstimateResponse(time_estimate=time_estimate)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

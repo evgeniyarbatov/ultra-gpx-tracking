@@ -24,14 +24,8 @@ class DistanceResponse(_message.Message):
     distance: float
     def __init__(self, distance: _Optional[float] = ...) -> None: ...
 
-class TimeResponse(_message.Message):
-    __slots__ = ("timestamp",)
-    TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
-    timestamp: str
-    def __init__(self, timestamp: _Optional[str] = ...) -> None: ...
-
-class GPXFile(_message.Message):
-    __slots__ = ("xml",)
-    XML_FIELD_NUMBER: _ClassVar[int]
-    xml: str
-    def __init__(self, xml: _Optional[str] = ...) -> None: ...
+class TimeEstimateResponse(_message.Message):
+    __slots__ = ("time_estimate",)
+    TIME_ESTIMATE_FIELD_NUMBER: _ClassVar[int]
+    time_estimate: str
+    def __init__(self, time_estimate: _Optional[str] = ...) -> None: ...
