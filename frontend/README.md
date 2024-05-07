@@ -7,5 +7,8 @@ npm run start
 Launch gRPC server locally:
 
 ```
-docker run -p 9090:9090 evgenyarbatov/gpx-backend:latest
+cd ../backend
+source ~/.venv/bin/activate && (\
+python src/server.py \
+)
 ```

@@ -9,7 +9,6 @@ from concurrent import futures
 PORT = 9090
 
 log = logging.getLogger("grpc-server")
-
 logging.basicConfig(
     format='%(asctime)s %(message)s',
     level=logging.DEBUG, 
@@ -40,9 +39,11 @@ class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    
     gpxtracker_pb2_grpc.add_GPXTrackerServicer_to_server(GPXTracker(), server)
     server.add_insecure_port("[::]:" + str(PORT))
     server.start()
+
     log.info("Listening on " + str(PORT))
     server.wait_for_termination()
 

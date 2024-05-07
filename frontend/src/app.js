@@ -1,5 +1,6 @@
 const express = require('express');
 const winston = require('winston');
+const cors = require('cors');
 
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
@@ -41,6 +42,8 @@ const logger = winston.createLogger({
 
 const app = express();
 
+app.use(cors())
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
@@ -77,7 +80,7 @@ app.get('/location', async (req, res) => {
 
   Promise.all(requests)
     .then(responses => {
-      res.json({ lat: lat, lng: lng, responses: responses });
+      res.json({ lat: lat, lng: lng, data: responses });
     })
     .catch(error => {
       res.json({ error: error });

@@ -18,6 +18,14 @@ services:
     networks:
       - default
     restart: unless-stopped
+  postgis:
+    image: evgenyarbatov/gpx-postgis:latest
+    container_name: "gpx-postgis"
+    ports:
+      - 5432:5432
+    networks:
+      - default
+    restart: unless-stopped
 
 networks:
   default:

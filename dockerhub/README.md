@@ -4,6 +4,15 @@ First time
 tf init
 ```
 
+Postgis
+
+```
+tf apply \
+-var 'image_name=gpx-postgis' \
+-var 'source_path=../postgis' \
+-auto-approve
+```
+
 Backend
 
 ```
