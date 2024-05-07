@@ -1,17 +1,18 @@
 # GPX Route Tracking for Ultras
 
-Track progress along a GPX route during an ultra run. This runs in the browser and for current location displays:
+Track progress along a GPX route during an ultra run. 
 
-- Street address of the current location
-- Distance completed and remaining
-- ETA to complete the route given current pace
-- Download GPX file for Polar watch (limited to next 500 waypoints)
+This runs in the browser on mobile and for current location displays:
+
+- Address
+- Distance completed
+- Cutoff time given time limit
 
 ## How to use
 
-- Add your GPX file to the server
-- Create/update Dockerhub images for frontend and backend
-- Deploy code to AWS with Terraform
+- Insert GPX track to PostGIS DB
+- Create Docker images
+- Deploy to AWS with Docker Compose and Terraform
 - Load public URL in the browser on the phone
 
 ## Run

@@ -1,12 +1,14 @@
 services:
-  frontend:
-    image: evgenyarbatov/gpx-frontend:latest
-    container_name: "gpx-frontend"
-    environment:
-      - SERVER_PORT=8080
-      - GRPC_SERVER=backend:9090
+  postgis:
+    image: evgenyarbatov/gpx-postgis:latest
+    container_name: "gpx-postgis"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-D", "gpx"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
-      - 8080:8080
+      - 5432:5432
     networks:
       - default
     restart: unless-stopped
@@ -21,14 +23,32 @@ services:
     networks:
       - default
     restart: unless-stopped
-  postgis:
-    image: evgenyarbatov/gpx-postgis:latest
-    container_name: "gpx-postgis"
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 9090"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      postgis:
+        condition: service_healthy
+  frontend:
+    image: evgenyarbatov/gpx-frontend:latest
+    container_name: "gpx-frontend"
+    environment:
+      - SERVER_PORT=8080
+      - GRPC_SERVER=backend:9090
     ports:
-      - 5432:5432
+      - 8080:8080
     networks:
       - default
     restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+
+
+
+
 
 networks:
   default:

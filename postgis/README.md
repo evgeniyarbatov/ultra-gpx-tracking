@@ -1,6 +1,4 @@
-PostGIS with GPX route for calculating distances.
-
-Run image:
+Run container:
 
 ```
 docker run -p 5432:5432 evgenyarbatov/gpx-postgis:latest

@@ -1,7 +1,7 @@
 FROM --platform=linux/amd64 ubuntu:latest
 
 RUN apt-get update
-RUN apt-get install python3 python3-pip -y
+RUN apt-get install python3 python3-pip libpq-dev netcat-traditional -y
 
 WORKDIR /usr/src/app
 
