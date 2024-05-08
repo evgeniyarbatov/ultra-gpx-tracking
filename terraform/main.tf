@@ -2,6 +2,11 @@ provider "aws" {
   region = var.aws_region
 }
 
+import {
+  to = aws_cloudfront_distribution.cloudfront
+  id = "E2ABRC7WI48APW"
+}
+
 variable "aws_region" {
   default = "ap-southeast-1"
 }
@@ -19,7 +24,7 @@ variable "key_name" {
 }
 
 variable "server_port" {
-  default = 8080
+  default = 80
 }
 
 data "aws_ami" "linux" {
@@ -110,5 +115,5 @@ output "logs" {
 }
 
 output "url" {
-  value = "http://${aws_instance.server.public_ip}:8080"
+  value = "http://arbatov.me/sg200/index.html"
 }
