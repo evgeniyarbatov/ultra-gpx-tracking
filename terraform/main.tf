@@ -24,7 +24,7 @@ variable "key_name" {
 }
 
 variable "server_port" {
-  default = 80
+  default = 8080
 }
 
 data "aws_ami" "linux" {

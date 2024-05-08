@@ -55,6 +55,14 @@
   </div>
 
   <script>
+    function getLocationAPIURL(latitude, longitude) {
+      const is_dev = window.location.hostname === 'localhost'
+      const base_url = is_dev
+        ? '/location' 
+        : '/sg200/location'
+      return base_url + '?lat=' + latitude + '&lng=' + longitude;
+    }
+
     function openGoogleMaps(lat, long) {
       var url = `https://www.google.com/maps?q=${lat},${long}`;
       window.open(url, '_blank');
@@ -65,7 +73,7 @@
         (position) => {
           var latitude = position.coords.latitude;
           var longitude = position.coords.longitude;
-          var url = "/location?lat=" + latitude + "&lng=" + longitude;
+          var url = getLocationAPIURL(latitude, longitude);
 
           fetch(url)
             .then(response => response.json())
@@ -97,6 +105,14 @@
             .catch(error => {
               alert('Error fetching from server', JSON.stringify(error));
             });
+        },
+        (error) => {
+            alert('Failed to get location');
+        },
+        {
+            timeout: 5000,
+            maximumAge: 0,
+            enableHighAccuracy: true,
         }
       );
     }
@@ -104,9 +120,9 @@
     function shareToWhatsApp() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          var latitude = position.coords.latitude;
-          var longitude = position.coords.longitude;
-          var url = "/location?lat=" + latitude + "&lng=" + longitude;
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const url = getLocationAPIURL(latitude, longitude);
 
           fetch(url)
             .then(response => response.json())
