@@ -77,7 +77,7 @@ app.get('/location', async (req, res) => {
   };
 
   new Promise((resolve, reject) => {
-    gRPCClient.getLocationInfo(request, (err, response) => {
+    gRPCClient.GetLocationInfo(request, (err, response) => {
       if (err) {
         reject(err);
       } else {
@@ -113,7 +113,7 @@ app.get('/gpx', (req, res) => {
   };
 
   new Promise((resolve, reject) => {
-    gRPCClient.getGPXFile(request, (err, response) => {
+    gRPCClient.GetGPXFile(request, (err, response) => {
       if (err) {
         reject(err);
       } else {

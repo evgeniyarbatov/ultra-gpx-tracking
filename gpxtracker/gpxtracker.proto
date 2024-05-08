@@ -19,6 +19,6 @@ message GPXFileResponse {
 }
 
 service GPXTracker {
-  rpc GetLocationInfo (LocationRequest) returns (LocationResponse) {};
-  rpc GetGPXFile(LocationRequest) returns (GPXFileResponse) {};
+  rpc GetLocationInfo (LocationRequest) returns (LocationResponse) {}
+  rpc GetGPXFile (LocationRequest) returns (GPXFileResponse) {}
 }
