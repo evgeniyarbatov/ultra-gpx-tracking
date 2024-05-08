@@ -64,6 +64,11 @@
   </div>
 
   <script>
+    function openGoogleMaps(lat, long) {
+      var url = `https://www.google.com/maps?q=${lat},${long}`;
+      window.open(url, '_blank');
+    }
+
     function getBaseURL() {
       const is_dev = window.location.hostname === 'localhost';
       return is_dev ? '' : '/sg200';
@@ -104,6 +109,18 @@
               const cutoffTimeElement = document.createElement('p');
               cutoffTimeElement.textContent = `Cutoff: ${formatDate(data.cutoff_time)}`;
               container.appendChild(cutoffTimeElement);
+
+              const coordinatesElement = document.createElement('p');
+              coordinatesElement.textContent = `Lat: ${data.lat} Long: ${data.lng} `;
+              const mapLinkElement = document.createElement("a");
+              mapLinkElement.href = "#";
+              mapLinkElement.textContent = '[Map]'
+              mapLinkElement.addEventListener("click", function(event) {
+                  event.preventDefault();
+                  openGoogleMaps(latitude, longitude);
+              });
+              coordinatesElement.appendChild(mapLinkElement);
+              container.appendChild(coordinatesElement);
             })
             .catch(error => {
               alert('Error fetching from server', JSON.stringify(error));
