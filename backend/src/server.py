@@ -6,6 +6,9 @@ import os
 
 from concurrent import futures
 
+from xml.etree.ElementTree import Element, SubElement, tostring
+import xml.dom.minidom
+
 import gpxtracker_pb2
 import gpxtracker_pb2_grpc
 
@@ -51,6 +54,39 @@ def store_distance(userid, distance):
     conn.commit()
     cur.close()
 
+def get_gpx_route(lat, lng):
+    cur = conn.cursor()
+    cur.execute(f"""
+        WITH closest_location AS (
+            SELECT
+                id,
+                location
+            FROM gpx_route
+            ORDER BY location <-> ST_SetSRID(ST_MakePoint({lng}, {lat}), 4326)
+            LIMIT 1
+        )
+        SELECT
+            ST_Y(g.location) AS lat,
+            ST_X(g.location) AS lng
+        FROM gpx_route g, closest_location c
+        WHERE g.id >= c.id
+        ORDER BY g.id
+        LIMIT 500;
+    """)
+
+    gpx = Element("GPX")
+    trk = SubElement(gpx, "trk")
+    trkseg = SubElement(trk, "trkseg")
+
+    for row in cur.fetchall():
+        SubElement(trkseg, "trkpt", attrib={"lat": str(row[0]), "lon": str(row[1])})
+
+    cur.close()
+
+    return xml.dom.minidom.parseString(
+        tostring(gpx, encoding="unicode")
+    ).toprettyxml()
+
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetLocationInfo(self, request, context):
         log.info(f"GetLocationInfo for {request.userid}: {request.lat} {request.lng}")
@@ -76,8 +112,10 @@ class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetGPXFile(self, request, context):
         log.info(f"GetGPXFile for {request.userid}: {request.lat} {request.lng}")
 
+        gpx_route = get_gpx_route(request.lat, request.lng)
+
         return gpxtracker_pb2.GPXFileResponse(
-            xml='<GPX><trk><trkseg><trkpt lat="1.3776499405503273" lon="103.82877993397415"></trkpt></trkseg></trk></GPX>',
+            xml=gpx_route,
         )   
 
 def serve():
