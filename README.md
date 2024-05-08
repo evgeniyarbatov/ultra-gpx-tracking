@@ -1,8 +1,6 @@
-# GPX Route Tracking for Ultras
+# GPX Route Tracking
 
-Track progress along a GPX route during an ultra run. 
-
-This runs in the browser on mobile and for current location displays:
+Track progress along a GPX route. Runs in the browser and for the current location displays:
 
 - Address
 - Distance completed
