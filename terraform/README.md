@@ -52,8 +52,8 @@ In import.tf define:
     compress    = true
 
     forwarded_values {
-      query_string = false
-      headers      = ["Origin"]
+      query_string = true
+      headers      = ["*"]
 
       cookies {
         forward = "all"
