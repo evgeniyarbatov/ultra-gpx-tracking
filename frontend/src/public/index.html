@@ -60,12 +60,18 @@
       const base_url = is_dev
         ? '/location' 
         : '/sg200/location'
-      return base_url + '?lat=' + latitude + '&lng=' + longitude;
+      return base_url + `?lat=${latitude}&lng=${longitude}`;
     }
 
-    function openGoogleMaps(lat, long) {
-      var url = `https://www.google.com/maps?q=${lat},${long}`;
-      window.open(url, '_blank');
+    function formatDate(input) {
+      const date = new Date(input);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const hours = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+      return `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day} @ ${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     }
 
     function getLocationInfo() {
@@ -82,25 +88,12 @@
               container.innerHTML = '';
 
               const locationElement = document.createElement('p');
-              locationElement.textContent = `Location: ${data.address} @ ${data.distance}km`;
+              locationElement.textContent = `${data.address} @ ${data.distance}km`;
               container.appendChild(locationElement);
 
               const cutoffTimeElement = document.createElement('p');
-              cutoffTimeElement.textContent = `Cutoff time: ${data.cutoff_time}`;
+              cutoffTimeElement.textContent = `Cutoff: ${formatDate(data.cutoff_time)}`;
               container.appendChild(cutoffTimeElement);
-
-              const coordinatesElement = document.createElement('p');
-              coordinatesElement.textContent = `Lat: ${data.lat} Long: ${data.lng}`;
-              container.appendChild(coordinatesElement);
-
-              const mapLinkElement = document.createElement("a");
-              mapLinkElement.href = "#";
-              mapLinkElement.textContent = "Google Maps";
-              mapLinkElement.addEventListener("click", function(event) {
-                  event.preventDefault();
-                  openGoogleMaps(latitude, longitude);
-              });
-              container.appendChild(mapLinkElement);
             })
             .catch(error => {
               alert('Error fetching from server', JSON.stringify(error));

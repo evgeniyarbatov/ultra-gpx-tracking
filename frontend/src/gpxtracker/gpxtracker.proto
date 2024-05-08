@@ -3,8 +3,9 @@ syntax = "proto3";
 package main;
 
 message LocationRequest {
-  float lat = 1;
-  float lng = 2;
+  string userid = 1;
+  float lat = 2;
+  float lng = 3;
 }
 
 message LocationResponse {

@@ -42,18 +42,35 @@ def get_location_info(lat, lng):
     cur.close()
     return row
 
+def store_distance(userid, distance):
+    cur = conn.cursor()
+    cur.execute(f"""
+        INSERT INTO distances (userid, distance) 
+        VALUES ('{userid}', {distance})
+    """)
+    conn.commit()
+    cur.close()
+
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetLocationInfo(self, request, context):
-        log.info(f"GetLocationInfo")
+        log.info(f"GetLocationInfo for {request.userid}: {request.lat} {request.lng}")
+        
         info = get_location_info(
             request.lat,
             request.lng,
         )
-        log.info(info)
+
+        address, distance, cutoff_time = info
+
+        store_distance(
+            request.userid,
+            distance
+        )
+
         return gpxtracker_pb2.LocationResponse(
-            address=info[0],
-            distance=info[1],
-            cutoff_time=info[2],
+            address=address,
+            distance=distance,
+            cutoff_time=cutoff_time,
         )
 
 def serve():

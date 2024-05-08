@@ -1,7 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS postgis;
 
-DROP TABLE IF EXISTS gpx_route;
-
 CREATE TABLE gpx_route (
     id SERIAL PRIMARY KEY,
     location GEOMETRY(Point, 4326),

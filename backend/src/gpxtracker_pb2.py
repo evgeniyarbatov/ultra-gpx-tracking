@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10gpxtracker.proto\x12\x04main\"+\n\x0fLocationRequest\x12\x0b\n\x03lat\x18\x01 \x01(\x02\x12\x0b\n\x03lng\x18\x02 \x01(\x02\"J\n\x10LocationResponse\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x10\n\x08\x64istance\x18\x02 \x01(\x02\x12\x13\n\x0b\x63utoff_time\x18\x03 \x01(\t2P\n\nGPXTracker\x12\x42\n\x0fGetLocationInfo\x12\x15.main.LocationRequest\x1a\x16.main.LocationResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x10gpxtracker.proto\x12\x04main\";\n\x0fLocationRequest\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x0b\n\x03lat\x18\x02 \x01(\x02\x12\x0b\n\x03lng\x18\x03 \x01(\x02\"J\n\x10LocationResponse\x12\x0f\n\x07\x61\x64\x64ress\x18\x01 \x01(\t\x12\x10\n\x08\x64istance\x18\x02 \x01(\x02\x12\x13\n\x0b\x63utoff_time\x18\x03 \x01(\t2P\n\nGPXTracker\x12\x42\n\x0fGetLocationInfo\x12\x15.main.LocationRequest\x1a\x16.main.LocationResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -22,9 +22,9 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'gpxtracker_pb2', _globals)
 if not _descriptor._USE_C_DESCRIPTORS:
   DESCRIPTOR._loaded_options = None
   _globals['_LOCATIONREQUEST']._serialized_start=26
-  _globals['_LOCATIONREQUEST']._serialized_end=69
-  _globals['_LOCATIONRESPONSE']._serialized_start=71
-  _globals['_LOCATIONRESPONSE']._serialized_end=145
-  _globals['_GPXTRACKER']._serialized_start=147
-  _globals['_GPXTRACKER']._serialized_end=227
+  _globals['_LOCATIONREQUEST']._serialized_end=85
+  _globals['_LOCATIONRESPONSE']._serialized_start=87
+  _globals['_LOCATIONRESPONSE']._serialized_end=161
+  _globals['_GPXTRACKER']._serialized_start=163
+  _globals['_GPXTRACKER']._serialized_end=243
 # @@protoc_insertion_point(module_scope)
