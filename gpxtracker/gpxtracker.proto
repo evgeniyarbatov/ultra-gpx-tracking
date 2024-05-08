@@ -14,6 +14,11 @@ message LocationResponse {
   string cutoff_time = 3;
 }
 
+message GPXFileResponse {
+  string xml = 1;
+}
+
 service GPXTracker {
-  rpc GetLocationInfo (LocationRequest) returns (LocationResponse) {}
+  rpc GetLocationInfo (LocationRequest) returns (LocationResponse) {};
+  rpc GetGPXFile(LocationRequest) returns (GPXFileResponse) {};
 }

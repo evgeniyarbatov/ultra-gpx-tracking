@@ -44,12 +44,23 @@ class GPXTrackerStub(object):
                 request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
                 response_deserializer=gpxtracker__pb2.LocationResponse.FromString,
                 _registered_method=True)
+        self.GetGPXFile = channel.unary_unary(
+                '/main.GPXTracker/GetGPXFile',
+                request_serializer=gpxtracker__pb2.LocationRequest.SerializeToString,
+                response_deserializer=gpxtracker__pb2.GPXFileResponse.FromString,
+                _registered_method=True)
 
 
 class GPXTrackerServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetLocationInfo(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetGPXFile(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -62,6 +73,11 @@ def add_GPXTrackerServicer_to_server(servicer, server):
                     servicer.GetLocationInfo,
                     request_deserializer=gpxtracker__pb2.LocationRequest.FromString,
                     response_serializer=gpxtracker__pb2.LocationResponse.SerializeToString,
+            ),
+            'GetGPXFile': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetGPXFile,
+                    request_deserializer=gpxtracker__pb2.LocationRequest.FromString,
+                    response_serializer=gpxtracker__pb2.GPXFileResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -90,6 +106,33 @@ class GPXTracker(object):
             '/main.GPXTracker/GetLocationInfo',
             gpxtracker__pb2.LocationRequest.SerializeToString,
             gpxtracker__pb2.LocationResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetGPXFile(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/main.GPXTracker/GetGPXFile',
+            gpxtracker__pb2.LocationRequest.SerializeToString,
+            gpxtracker__pb2.GPXFileResponse.FromString,
             options,
             channel_credentials,
             insecure,

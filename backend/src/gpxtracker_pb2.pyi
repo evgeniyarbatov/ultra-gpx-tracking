@@ -23,3 +23,9 @@ class LocationResponse(_message.Message):
     distance: float
     cutoff_time: str
     def __init__(self, address: _Optional[str] = ..., distance: _Optional[float] = ..., cutoff_time: _Optional[str] = ...) -> None: ...
+
+class GPXFileResponse(_message.Message):
+    __slots__ = ("xml",)
+    XML_FIELD_NUMBER: _ClassVar[int]
+    xml: str
+    def __init__(self, xml: _Optional[str] = ...) -> None: ...

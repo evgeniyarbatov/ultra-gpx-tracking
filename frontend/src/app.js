@@ -100,6 +100,35 @@ app.get('/location', async (req, res) => {
   });
 });
 
+app.get('/gpx', (req, res) => {
+  const { lat, lng } = req.query;
+  const userid = req.cookies.userid;
+
+  logger.info(`GPX: userid=${userid} lat=${lat}, lng=${lng}`);
+
+  const request = {
+    lat: lat,
+    lng: lng,
+    userid: userid,
+  };
+
+  new Promise((resolve, reject) => {
+    gRPCClient.getGPXFile(request, (err, response) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(response);
+      }
+    });
+  }).then(response => {
+    res.set('Content-Type', 'application/xml');
+    res.send(response.xml);
+  })
+  .catch(error => {
+    res.json({ error: error });
+  });
+});
+
 app.listen(port, () => {
   logger.info(`App listening at http://localhost:${port}`);
 });

@@ -72,6 +72,13 @@ class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
             distance=distance,
             cutoff_time=cutoff_time,
         )
+    
+    def GetGPXFile(self, request, context):
+        log.info(f"GetGPXFile for {request.userid}: {request.lat} {request.lng}")
+
+        return gpxtracker_pb2.GPXFileResponse(
+            xml='<GPX><trk><trkseg><trkpt lat="1.3776499405503273" lon="103.82877993397415"></trkpt></trkseg></trk></GPX>',
+        )   
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
