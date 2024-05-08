@@ -1,11 +1,13 @@
 CREATE EXTENSION IF NOT EXISTS postgis;
 
+DROP TABLE IF EXISTS gpx_route;
+
 CREATE TABLE gpx_route (
     id SERIAL PRIMARY KEY,
     location GEOMETRY(Point, 4326),
     distance DECIMAL,
     cutoff_time VARCHAR(255),
-    street VARCHAR(1000)
+    street VARCHAR(255)
 );
 
 CREATE TEMP TABLE tmp_route (
@@ -14,7 +16,7 @@ CREATE TEMP TABLE tmp_route (
     longitude DECIMAL,
     distance DECIMAL,
     cutoff_time VARCHAR(255),
-    street VARCHAR(1000)
+    street VARCHAR(255)
 );
 
 COPY tmp_route(latitude, longitude, distance, cutoff_time, street)
