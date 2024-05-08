@@ -2,10 +2,10 @@ provider "aws" {
   region = var.aws_region
 }
 
-import {
-  to = aws_cloudfront_distribution.cloudfront
-  id = "E2ABRC7WI48APW"
-}
+# import {
+#   to = aws_cloudfront_distribution.cloudfront
+#   id = "E2ABRC7WI48APW"
+# }
 
 variable "aws_region" {
   default = "ap-southeast-1"
@@ -115,5 +115,5 @@ output "logs" {
 }
 
 output "url" {
-  value = "http://arbatov.me/sg200/index.html"
+  value = "https://arbatov.me/sg200/index.html"
 }
