@@ -44,7 +44,7 @@ const app = express();
 
 app.use(cors())
 
-app.get('/', (req, res) => {
+app.get(/^\/(index.html)?$/, (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
