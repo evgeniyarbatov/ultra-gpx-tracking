@@ -16,6 +16,7 @@ import gpxtracker_pb2_grpc
 PORT = os.getenv("SERVER_PORT", 9090)
 
 log = logging.getLogger("grpc-server")
+
 logging.basicConfig(
     format='%(asctime)s %(message)s',
     level=logging.DEBUG, 
@@ -37,7 +38,9 @@ def get_location_info(lat, lng):
         SELECT 
             street, 
             ROUND(distance), 
-            cutoff_time
+            cutoff_time,
+            ROUND(planned_hours),
+            planned_time
         FROM gpx_route
         ORDER BY location <-> ST_SetSRID(ST_MakePoint({lng}, {lat}), 4326)
         LIMIT 1;
@@ -53,7 +56,7 @@ def get_placemarks(lat, lng, distance):
             ST_Y(location) AS latitude,
             ST_X(location) AS longitude,
             name,
-            distance
+            ROUND(distance)
         FROM
             placemarks
         WHERE
@@ -127,7 +130,7 @@ class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
             request.lng,
         )
 
-        address, distance, cutoff_time = info
+        address, distance, cutoff_time, planned_hours, planned_time = info
 
         placemarks = get_placemarks(
             request.lat,
@@ -143,6 +146,8 @@ class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
         return gpxtracker_pb2.LocationResponse(
             address=address,
             distance=distance,
+            planned_time=planned_time,
+            planned_hours=planned_hours,
             cutoff_time=cutoff_time,
             placemarks=placemarks,
         )

@@ -48,7 +48,7 @@ const app = express();
 app.use(cors())
 app.use(cookieParser());
 
-app.get(/^\/(index.html)?$/, (req, res) => {
+app.use((req, res, next) => {
   const has_userid = req.cookies && 'userid' in req.cookies;
   if (!has_userid) {
     const userid = uuidv4();
@@ -61,6 +61,10 @@ app.get(/^\/(index.html)?$/, (req, res) => {
       }
     );
   }
+  next();
+});
+
+app.get(/^\/(index.html)?$/, (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 

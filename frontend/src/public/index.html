@@ -106,14 +106,6 @@
               const container = document.getElementById('container');
               container.innerHTML = '';
 
-              const locationElement = document.createElement('p');
-              locationElement.textContent = `${data.address} @ ${data.distance}km`;
-              container.appendChild(locationElement);
-
-              const cutoffTimeElement = document.createElement('p');
-              cutoffTimeElement.textContent = `Cutoff: ${formatDate(data.cutoff_time)}`;
-              container.appendChild(cutoffTimeElement);
-
               const coordinatesElement = document.createElement('p');
               coordinatesElement.textContent = `Lat: ${data.lat} Long: ${data.lng} `;
               const mapLinkElement = document.createElement("a");
@@ -125,6 +117,26 @@
               });
               coordinatesElement.appendChild(mapLinkElement);
               container.appendChild(coordinatesElement);
+
+              const locationElement = document.createElement('p');
+              locationElement.textContent = `${data.address} @ ${data.distance}km`;
+              container.appendChild(locationElement);
+
+              const hr1 = document.createElement('hr');
+              hr1.classList.add('my-4');
+              container.appendChild(hr1);
+
+              const plannedTimeElement = document.createElement('p');
+              plannedTimeElement.textContent = `Planned (30km / 6 hours): ${formatDate(data.planned_time)} (${data.planned_hours}h) (finish: 05/20 @ 13:18)`;
+              container.appendChild(plannedTimeElement);
+
+              const cutoffTimeElement = document.createElement('p');
+              cutoffTimeElement.textContent = `Cutoff (322 km / 74 hours): ${formatDate(data.cutoff_time)} (finish: 05/20 @ 22:58)`;
+              container.appendChild(cutoffTimeElement);
+
+              const hr2 = document.createElement('hr');
+              hr2.classList.add('my-4');
+              container.appendChild(hr2);
 
               const placemarks = JSON.parse(data.placemarks);
               placemarks.forEach(placemark => {

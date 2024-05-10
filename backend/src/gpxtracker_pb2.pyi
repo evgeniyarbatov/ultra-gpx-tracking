@@ -15,16 +15,20 @@ class LocationRequest(_message.Message):
     def __init__(self, userid: _Optional[str] = ..., lat: _Optional[float] = ..., lng: _Optional[float] = ...) -> None: ...
 
 class LocationResponse(_message.Message):
-    __slots__ = ("address", "distance", "cutoff_time", "placemarks")
+    __slots__ = ("address", "distance", "cutoff_time", "placemarks", "planned_hours", "planned_time")
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     DISTANCE_FIELD_NUMBER: _ClassVar[int]
     CUTOFF_TIME_FIELD_NUMBER: _ClassVar[int]
     PLACEMARKS_FIELD_NUMBER: _ClassVar[int]
+    PLANNED_HOURS_FIELD_NUMBER: _ClassVar[int]
+    PLANNED_TIME_FIELD_NUMBER: _ClassVar[int]
     address: str
     distance: float
     cutoff_time: str
     placemarks: str
-    def __init__(self, address: _Optional[str] = ..., distance: _Optional[float] = ..., cutoff_time: _Optional[str] = ..., placemarks: _Optional[str] = ...) -> None: ...
+    planned_hours: float
+    planned_time: str
+    def __init__(self, address: _Optional[str] = ..., distance: _Optional[float] = ..., cutoff_time: _Optional[str] = ..., placemarks: _Optional[str] = ..., planned_hours: _Optional[float] = ..., planned_time: _Optional[str] = ...) -> None: ...
 
 class GPXFileResponse(_message.Message):
     __slots__ = ("xml",)
