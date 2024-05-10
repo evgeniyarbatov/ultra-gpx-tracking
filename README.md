@@ -8,7 +8,7 @@ Track progress along a GPX route. Runs in the browser and for the current locati
 
 ## UX
 
-<img width="273" alt="Screenshot 2024-05-10 at 2 37 18 PM" src="https://github.com/evgeniyarbatov/ultra-gpx-tracking/assets/1913350/f6a738c8-979c-406e-9414-18b1ed829fb7">
+![screen](https://github.com/evgeniyarbatov/ultra-gpx-tracking/assets/1913350/44233460-500c-4c00-872c-01e3a5f59b68)
 
 ## How to use
 
