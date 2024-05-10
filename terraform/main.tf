@@ -2,11 +2,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-# import {
-#   to = aws_cloudfront_distribution.cloudfront
-#   id = "E2ABRC7WI48APW"
-# }
-
 variable "aws_region" {
   default = "ap-southeast-1"
 }
@@ -112,6 +107,14 @@ output "ssh" {
 
 output "logs" {
   value = "ssh -i ~/.ssh/terraform.pem -o 'StrictHostKeyChecking no' ubuntu@${aws_instance.server.public_ip} 'tail -f /var/log/cloud-init-output.log'"
+}
+
+output "public_dns" {
+  value = "Public DNS: ${aws_instance.server.public_dns}"
+}
+
+output "server_id" {
+  value = "Server ID: ${aws_instance.server.id}"
 }
 
 output "url" {
