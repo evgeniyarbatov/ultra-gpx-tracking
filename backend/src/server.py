@@ -50,8 +50,8 @@ def get_placemarks(lat, lng, distance):
     cur = conn.cursor()
     cur.execute(f"""
         SELECT
-            ST_X(location) AS latitude,
-            ST_Y(location) AS longitude,
+            ST_Y(location) AS latitude,
+            ST_X(location) AS longitude,
             name,
             distance
         FROM
