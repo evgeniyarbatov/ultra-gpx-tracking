@@ -2,7 +2,7 @@ Run local:
 
 ```
 source ~/.venv/bin/activate && (\
-python src/server.py \
+watchmedo auto-restart --recursive --pattern="*.py" python src/server.py \
 )
 ```
 

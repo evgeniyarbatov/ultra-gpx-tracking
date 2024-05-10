@@ -3,6 +3,7 @@ import psycopg2
 import logging
 import sys
 import os
+import json
 
 from concurrent import futures
 
@@ -44,6 +45,36 @@ def get_location_info(lat, lng):
     row = cur.fetchone()
     cur.close()
     return row
+
+def get_placemarks(lat, lng, distance):
+    cur = conn.cursor()
+    cur.execute(f"""
+        SELECT
+            ST_X(location) AS latitude,
+            ST_Y(location) AS longitude,
+            name,
+            distance
+        FROM
+            placemarks
+        WHERE
+            distance >= {distance}
+        ORDER BY
+            location <-> ST_SetSRID(ST_MakePoint({lng}, {lat}), 4326)
+        LIMIT 20;
+    """)
+
+    placemarks = []
+    for row in cur.fetchall():
+        placemarks.append({
+            "lat": str(row[0]),
+            "lng": str(row[1]),
+            "name": str(row[2]),
+            "distance": str(row[3]),
+        })
+
+    cur.close()
+
+    return json.dumps(placemarks)
 
 def store_distance(userid, distance):
     cur = conn.cursor()
@@ -90,13 +121,19 @@ def get_gpx_route(lat, lng):
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetLocationInfo(self, request, context):
         log.info(f"GetLocationInfo for {request.userid}: {request.lat} {request.lng}")
-        
+
         info = get_location_info(
             request.lat,
             request.lng,
         )
 
         address, distance, cutoff_time = info
+
+        placemarks = get_placemarks(
+            request.lat,
+            request.lng,
+            distance,          
+        )
 
         store_distance(
             request.userid,
@@ -107,6 +144,7 @@ class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
             address=address,
             distance=distance,
             cutoff_time=cutoff_time,
+            placemarks=placemarks,
         )
     
     def GetGPXFile(self, request, context):

@@ -29,6 +29,10 @@
     .location-info {
       padding-top: 15px;
     }
+    #placemarks-table {
+      display: none;
+      width: 90%;
+    }
   </style>
 </head>
 <body>
@@ -121,6 +125,25 @@
               });
               coordinatesElement.appendChild(mapLinkElement);
               container.appendChild(coordinatesElement);
+
+              const placemarks = JSON.parse(data.placemarks);
+              placemarks.forEach(placemark => {
+                const placemarkElement = document.createElement('p');
+                placemarkElement.textContent = `
+                  ${placemark.name} @ ${placemark.distance}km 
+                `;
+
+                const mapLinkElement = document.createElement("a");
+                mapLinkElement.href = "#";
+                mapLinkElement.textContent = '[Map]'
+                mapLinkElement.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    openGoogleMaps(placemark.lat, placemark.lng);
+                });
+
+                placemarkElement.appendChild(mapLinkElement);
+                container.appendChild(placemarkElement);
+              });
             })
             .catch(error => {
               alert('Error fetching from server', JSON.stringify(error));

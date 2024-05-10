@@ -12,6 +12,7 @@ message LocationResponse {
   string address = 1;
   float distance = 2;
   string cutoff_time = 3;
+  string placemarks = 4;
 }
 
 message GPXFileResponse {
