@@ -79,15 +79,6 @@ def get_placemarks(lat, lng, distance):
 
     return json.dumps(placemarks)
 
-def store_distance(userid, distance):
-    cur = conn.cursor()
-    cur.execute(f"""
-        INSERT INTO distances (userid, distance) 
-        VALUES ('{userid}', {distance})
-    """)
-    conn.commit()
-    cur.close()
-
 def get_gpx_route(lat, lng):
     cur = conn.cursor()
     cur.execute(f"""
@@ -123,7 +114,7 @@ def get_gpx_route(lat, lng):
 
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetLocationInfo(self, request, context):
-        log.info(f"GetLocationInfo for {request.userid}: {request.lat} {request.lng}")
+        log.info(f"GetLocationInfo: {request.lat} {request.lng}")
 
         info = get_location_info(
             request.lat,
@@ -136,11 +127,6 @@ class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
             request.lat,
             request.lng,
             distance,          
-        )
-
-        store_distance(
-            request.userid,
-            distance
         )
 
         return gpxtracker_pb2.LocationResponse(

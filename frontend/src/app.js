@@ -5,9 +5,6 @@ const cors = require('cors');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-const cookieParser = require('cookie-parser');
-const {v4: uuidv4} = require('uuid');
-
 const port = process.env.SERVER_PORT || 8080;
 const gRPCServerURL = process.env.GRPC_SERVER || 'localhost:9090'
 
@@ -48,36 +45,17 @@ const app = express();
 app.use(cors())
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-  const has_userid = req.cookies && 'userid' in req.cookies;
-  if (!has_userid) {
-    const userid = uuidv4();
-    res.cookie(
-      'userid', 
-      userid, 
-      {
-        maxAge: 900000, 
-        httpOnly: true,
-      }
-    );
-  }
-  next();
-});
-
 app.get(/^\/(index.html)?$/, (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/location', async (req, res) => {
   const { lat, lng } = req.query;
-  const userid = req.cookies.userid;
-
-  logger.info(`Location: userid=${userid} lat=${lat}, lng=${lng}`);
+  logger.info(`Location: lat=${lat}, lng=${lng}`);
 
   const request = {
     lat: lat,
     lng: lng,
-    userid: userid,
   };
 
   new Promise((resolve, reject) => {
@@ -106,14 +84,11 @@ app.get('/location', async (req, res) => {
 
 app.get('/gpx', (req, res) => {
   const { lat, lng } = req.query;
-  const userid = req.cookies.userid;
-
-  logger.info(`GPX: userid=${userid} lat=${lat}, lng=${lng}`);
+  logger.info(`GPX: lat=${lat}, lng=${lng}`);
 
   const request = {
     lat: lat,
     lng: lng,
-    userid: userid,
   };
 
   new Promise((resolve, reject) => {

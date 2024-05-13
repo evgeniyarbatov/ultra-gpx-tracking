@@ -5,14 +5,12 @@ from typing import ClassVar as _ClassVar, Optional as _Optional
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class LocationRequest(_message.Message):
-    __slots__ = ("userid", "lat", "lng")
-    USERID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("lat", "lng")
     LAT_FIELD_NUMBER: _ClassVar[int]
     LNG_FIELD_NUMBER: _ClassVar[int]
-    userid: str
     lat: float
     lng: float
-    def __init__(self, userid: _Optional[str] = ..., lat: _Optional[float] = ..., lng: _Optional[float] = ...) -> None: ...
+    def __init__(self, lat: _Optional[float] = ..., lng: _Optional[float] = ...) -> None: ...
 
 class LocationResponse(_message.Message):
     __slots__ = ("address", "distance", "cutoff_time", "placemarks", "planned_hours", "planned_time")
