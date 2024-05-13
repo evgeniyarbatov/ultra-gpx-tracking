@@ -110,11 +110,7 @@ output "logs" {
 }
 
 output "public_dns" {
-  value = "Public DNS: ${aws_instance.server.public_dns}"
-}
-
-output "server_id" {
-  value = "Server ID: ${aws_instance.server.id}"
+  value = "${aws_instance.server.public_dns}"
 }
 
 output "url" {
