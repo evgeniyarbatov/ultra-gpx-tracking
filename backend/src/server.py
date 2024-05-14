@@ -114,7 +114,7 @@ def get_gpx_route(lat, lng):
 
 class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
     def GetLocationInfo(self, request, context):
-        log.info(f"GetLocationInfo: {request.lat} {request.lng}")
+        log.info(f"GetLocationInfo")
 
         info = get_location_info(
             request.lat,
@@ -139,7 +139,7 @@ class GPXTracker(gpxtracker_pb2_grpc.GPXTrackerServicer):
         )
     
     def GetGPXFile(self, request, context):
-        log.info(f"GetGPXFile for {request.userid}: {request.lat} {request.lng}")
+        log.info(f"GetGPXFile")
 
         gpx_route = get_gpx_route(request.lat, request.lng)
 
